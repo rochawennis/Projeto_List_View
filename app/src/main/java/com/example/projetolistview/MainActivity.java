@@ -1,6 +1,7 @@
 package com.example.projetolistview;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -71,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
 
                         Toast.makeText(MainActivity.this, p.getDados(), Toast.LENGTH_SHORT).show();
                     }
-
                 });
-                listViewPessoas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                listViewPessoas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
+
                         Pessoa p = (Pessoa) listViewPessoas.getItemAtPosition(position);
 
                         AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
@@ -96,7 +97,18 @@ public class MainActivity extends AppCompatActivity {
                                 dialogInterface.cancel();
                             }
                         });
+
+                        dlg.setNeutralButton("Verificar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Pessoa p = (Pessoa) listViewPessoas.getItemAtPosition(position);
+                                Intent it = new Intent(getApplicationContext(), Resultado.class);
+                                it.putExtra("pessoa", p);
+                                startActivity(it);
+                            }
+                        });
                         dlg.create().show();
+                        return false;
                     }
                 });
             }
