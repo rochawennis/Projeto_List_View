@@ -1,13 +1,15 @@
 package com.example.projetolistview;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public class Pessoa implements Serializable {
+
     private String nome;
     private String sobrenome;
     private String curso;
 
-    // construtor vazio
+    //construtor vazio
     public Pessoa() {
     }
 
@@ -41,8 +43,21 @@ public class Pessoa implements Serializable {
         this.curso = curso;
     }
 
+    public String getDados() {
+        return "nome: " + nome + " " + sobrenome + "\nCurso: " + curso;
+    }
+
     @Override
     public String toString() {
         return nome + " " + sobrenome;
     }
 }
+
+class OrdenaPorNome implements Comparator<Pessoa> {
+
+    @Override
+    public int compare(Pessoa p1, Pessoa p2) {
+        return p1.getNome().compareTo(p2.getNome());
+    }
+}
+
